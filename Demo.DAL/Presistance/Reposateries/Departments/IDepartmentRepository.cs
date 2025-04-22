@@ -4,18 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Demo.DAL.Entities.Departments;
+using Demo.DAL.Presistance.Reposateries.Generics;
 
 namespace Demo.DAL.Presistance.Reposateries.Departments
 {
-    public interface IDepartmentRepository
+    public interface IDepartmentRepository : IGenericRepository<Department>
     {
-        IEnumerable<Department> GetAll(bool AsNoTracking = true);
-        IQueryable<Department> GetAllQuarable();
-        Department? GetById(int id);
-        int AddDepartment(Department entity);
-        int UpadteDepartment(Department entity);
-        int DeleateDepartment(Department entity);
-
-        
     }
 }

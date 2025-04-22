@@ -70,7 +70,7 @@ namespace Demo.BLL.Services
 
             };
 
-            return _departmentRepository.AddDepartment(newDepartment);
+            return _departmentRepository.AddT(newDepartment);
         }
 
         public int UpdateDepartment(DepartmentToUpdateDto department)
@@ -87,7 +87,7 @@ namespace Demo.BLL.Services
 
             };
 
-            return _departmentRepository.AddDepartment(updateDepartment);
+            return _departmentRepository.AddT(updateDepartment);
         }
 
         public bool DeleteDepartment(int id)
@@ -96,7 +96,7 @@ namespace Demo.BLL.Services
 
             if ((department is not null))
             {
-                return _departmentRepository.DeleateDepartment(department) > 0;
+                return _departmentRepository.DeleateT(department) > 0;
             }
             return false;
 
