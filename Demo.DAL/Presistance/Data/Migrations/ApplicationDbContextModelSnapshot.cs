@@ -51,6 +51,9 @@ namespace Demo.DAL.Presistance.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("LastModifiedBy")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("LastModifiedOn")
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")

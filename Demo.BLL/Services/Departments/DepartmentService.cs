@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Demo.BLL.Dtos;
 using Demo.BLL.Dtos.Departments;
+using Demo.BLL.Services.Departments;
 using Demo.DAL.Entities.Departments;
 using Demo.DAL.Presistance.Reposateries.Departments;
 using Microsoft.EntityFrameworkCore;
@@ -46,7 +47,7 @@ namespace Demo.BLL.Services
                     CreationDate = department.CreationDate,
                     CreatedBy = department.CreatedBy,
                     CreatedOn = department.CreatedOn,
-                    LastModifiedOn = department.LastModifiedOn, 
+                    LastModifiedOn = department.LastModifiedOn,
                     Description = department.Description,
                     IsDeleted = department.IsDeleted,
                 };
@@ -92,13 +93,15 @@ namespace Demo.BLL.Services
         public bool DeleteDepartment(int id)
         {
             var department = _departmentRepository.GetById(id);
-            
-                if ((department is not null))
-                {
-                 return _departmentRepository.DeleateDepartment(department) > 0;                
-                }
-                return false;
-               
+
+            if ((department is not null))
+            {
+                return _departmentRepository.DeleateDepartment(department) > 0;
+            }
+            return false;
+
         }
+
+       
     }
 }

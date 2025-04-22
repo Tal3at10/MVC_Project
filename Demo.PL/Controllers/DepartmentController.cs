@@ -1,5 +1,7 @@
 ﻿using Demo.BLL.Dtos;
 using Demo.BLL.Services;
+using Demo.BLL.Services.Departments;
+using Demo.DAL.Entities.Departments;
 using Demo.PL.ViewModels.Departments;
 using Microsoft.AspNetCore.Mvc;
 
@@ -55,7 +57,7 @@ namespace Demo.PL.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex,message);
+                _logger.LogError(ex, message);
 
                 if (_env.IsDevelopment())
                 {
@@ -74,11 +76,11 @@ namespace Demo.PL.Controllers
         [HttpGet]
         public IActionResult Details(int? id)
         {
-            if(id == null)
+            if (id == null)
                 return BadRequest(); // erorr 400
 
             var department = _departmentService.GetDepartmentById(id.Value);
-            if(department == null)
+            if (department == null)
                 return NotFound(); // erorr 404
 
             return View(department);
@@ -103,5 +105,74 @@ namespace Demo.PL.Controllers
             });
         }
 
+        [HttpPost]
+        public IActionResult Edit(int id, DepartmentEditViewModel departmentVM)
+        {
+            if (!ModelState.IsValid)
+                return View(departmentVM);
+            var message = string.Empty;
+
+            try
+            {
+                var result = _departmentService.UpdateDepartment(new DepartmentToUpdateDto()
+                {
+                    Code = departmentVM.Code,
+                    Name = departmentVM.Name,
+                    Description = departmentVM.Description,
+                    CreationDate = departmentVM.CreationDate,
+                });
+
+                if (result > 0)
+                    return RedirectToAction(nameof(Index));
+                else
+                {
+                    message = "Department Cannot Be Updated";
+                }
+            }
+            catch (Exception ex)
+            {
+                message = _env.IsDevelopment() ? ex.Message : "Department Cannot Be Updated";
+            }
+            return View(departmentVM);
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int? id)
+        {
+            if (id is null)
+                return BadRequest();
+
+            var department = _departmentService.GetDepartmentById(id.Value);
+
+            if (department == null) return NotFound();
+            return View(department);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            var result = _departmentService.DeleteDepartment(id);
+            var message = string.Empty;
+          
+
+            try
+            {
+                if (result)
+                    return RedirectToAction(nameof(Index));
+
+                message = "An Error Happened while Deleting";
+
+               
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex,ex.Message);
+                message = _env.IsDevelopment() ? ex.Message : "An Error Happened while Deleting";
+            }
+            ModelState.AddModelError(string.Empty, message);    
+            return View(nameof(Index));
+        }
+
     }
+
 }
