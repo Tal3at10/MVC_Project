@@ -5,20 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 using Demo.DAL.Entities.Common.Enums;
 
-namespace Demo.DAL.Entities.Employees
+namespace Demo.BLL.Dtos.Employees
 {
-    public class Employee : ModelBase
+    public class EmployeeToReturnDto
     {
+        public int Id { get; set; }
         public string Name { get; set; } = null!;
         public int? Age { get; set; }
-        public string? Address { get; set; }
         public decimal Salary { get; set; }
         public bool IsActive { get; set; }
-        public string? PhoneNumber  { get; set; }
         public string? Email { get; set; }
-        public DateOnly HiringDate { get; set; }
-        public Gander Gander { get; set; }
-        public EmployeeType EmployeeType { get; set; }
-
+        public string Gander { get; set; }
+        public string EmployeeType { get; set; }
     }
 }
