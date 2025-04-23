@@ -1,0 +1,90 @@
+﻿@using Demo.BLL.Dtos.Employees
+@using Demo.DAL.Entities.Common.Enums
+@model EmployeeToCreateDto
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="justify-content-center align-content-center mt-3">
+    <h1 class="col-8 my-4">Create Employee</h1>
+    <form method="post" asp-controller="Employee" asp-action="Create" class="col-8">
+        <div asp-validation-summary="ModelOnly"></div>
+
+        <div class="form-group mb-3">
+            <label class="form-label" for="Name">Name</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span> @*Code is Required*@
+        </div>
+
+        <div class="form-group mb-3">
+            <label class="form-label" for="Email">Email</label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span> @*Code is Required*@
+        </div>
+
+        <div class="form-group mb-3">
+            <label class="form-label" for="Address">Address</label>
+            <input asp-for="Address" class="form-control" />
+            <span asp-validation-for="Address" class="text-danger"></span> @*Code is Required*@
+        </div>
+
+        <div class="form-group mb-3">
+            <label class="form-label" for="PhoneNumber">PhoneNumber</label>
+            <input asp-for="PhoneNumber" class="form-control" />
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span> @*Code is Required*@
+        </div>
+
+        <div class="form-group mb-3">
+            <label class="form-label" for="Age">Age</label>
+            <input asp-for="Age" class="form-control" />
+            <span asp-validation-for="Age" class="text-danger"></span> @*Code is Required*@
+        </div>
+
+        <div class="form-group mb-3">
+            <label class="form-label" for="Salary">Salary</label>
+            <input asp-for="Salary" class="form-control" />
+            <span asp-validation-for="Salary" class="text-danger"></span> @*Code is Required*@
+        </div>
+
+        <div class="form-group mb-3">
+            <label class="form-label" for="HiringDate">HiringDate</label>
+            <input type="date" asp-for="HiringDate" class="form-control" />
+            <span asp-validation-for="HiringDate" class="text-danger"></span> @*Code is Required*@
+        </div>
+
+        <div class="form-group mb-3">
+            <label class="form-label" for="Gander">Gander</label>
+            <div>
+                @foreach(Gander ganderOption in Enum.GetValues(typeof(Gander)))
+                {
+                      <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" asp-for="Gander" value="@ganderOption" />
+                          <label class="form-check-label">@ganderOption</label>
+
+                      </div>
+                }
+            </>
+            <span asp-validation-for="Gander" class="text-danger"></span> @*Code is Required*@
+        </div>
+
+            <div class="form-group mb-3">
+                <select asp-for="EmployeeType" asp-items="Html.GetEnumSelectList<EmployeeType>()" class="form-control">
+                    <option-value="">Seslect EmployeeType </option-value>
+                    </select>
+                <span asp-validation-for="EmployeeType" class="text-danger"></span> 
+
+                <div class="form-group mb-3">
+                    <input asp-for="IsActive" class="form-check-input" />
+                    <label class="col-form-label" asp-for="IsActive">Is Active</label>
+                </div>
+
+                <div class="mt-4 m-auto">
+                    <input class="btn btn-primary" type="submit" value="Create"/>
+                    <label class="col-form-label" asp-for="IsActive">Is Active</label>
+                    <a asp-controller="Employee" asp-action="Index"class="btn btn-outline-dark">Back To List</a>
+                </div>
+
+      
+
+    </form>
+</div>

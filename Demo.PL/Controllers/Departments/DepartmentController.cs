@@ -5,7 +5,7 @@ using Demo.DAL.Entities.Departments;
 using Demo.PL.ViewModels.Departments;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Demo.PL.Controllers
+namespace Demo.PL.Controllers.Departments
 {
     public class DepartmentController : Controller
     {
@@ -153,7 +153,7 @@ namespace Demo.PL.Controllers
         {
             var result = _departmentService.DeleteDepartment(id);
             var message = string.Empty;
-          
+
 
             try
             {
@@ -162,14 +162,14 @@ namespace Demo.PL.Controllers
 
                 message = "An Error Happened while Deleting";
 
-               
+
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex,ex.Message);
+                _logger.LogError(ex, ex.Message);
                 message = _env.IsDevelopment() ? ex.Message : "An Error Happened while Deleting";
             }
-            ModelState.AddModelError(string.Empty, message);    
+            ModelState.AddModelError(string.Empty, message);
             return View(nameof(Index));
         }
 

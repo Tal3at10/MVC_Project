@@ -50,7 +50,7 @@ namespace Demo.BLL.Services.Employees
 
         public IEnumerable<EmployeeToReturnDto> GetAllEmployees()
         {
-            return _employeeRepository.GetAllQuarable().Select(employee => new EmployeeToReturnDto()
+            return _employeeRepository.GetAllQuarable().Where(e=>e.IsDeleted == false).Select(employee => new EmployeeToReturnDto()
             {
                 Id = employee.Id,
                 Name = employee.Name,

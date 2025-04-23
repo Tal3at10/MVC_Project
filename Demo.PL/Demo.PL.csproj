@@ -19,4 +19,8 @@
     <ProjectReference Include="..\Demo.BLL\Demo.BLL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ViewModels\Employees\" />
+  </ItemGroup>
+
 </Project>
