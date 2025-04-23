@@ -1,8 +1,11 @@
 ﻿using Demo.BLL.Dtos;
 using Demo.BLL.Dtos.Employees;
 using Demo.BLL.Services.Employees;
+using Demo.DAL.Entities.Common.Enums;
+using Demo.DAL.Entities.Employees;
 using Demo.PL.Controllers.Employees;
-//using Demo.PL.ViewModels.Employees;
+using Demo.PL.ViewModels.Employees;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace Demo.PL.Controllers.Employees
@@ -86,55 +89,73 @@ namespace Demo.PL.Controllers.Employees
             return View(employee);
         }
 
-        //[HttpGet]
-        //public IActionResult Edit(int? id)
-        //{
-        //    if (id == null)
-        //        return BadRequest(); // error 400
+        [HttpGet]
+        public IActionResult Edit(int? id)
+        {
+            if (!id.HasValue)
+                return BadRequest(); // 400 Bad Request
 
-        //    var employee = _employeeService.GetEmployeeById(id.Value);
-        //    if (employee == null)
-        //        return NotFound(); // error 404
+            var employee = _employeeService.GetEmployeeById(id.Value);
+            if (employee == null)
+                return NotFound(); // 404 Not Found
 
-        //    return View(new EmployeeEditViewModel
-        //    {
-        //        Code = employee.Code,
-        //        Name = employee.Name,
-        //        CreationDate = employee.CreationDate,
-        //        Description = employee.Description
-        //    });
-        //}
+           
+            var model = new EmployeeEditViewModel
+            {
+                Id = employee.Id,
+                Name = employee.Name,
+                Address = employee.Address,
+                Email = employee.Email,
+                HiringDate = employee.HiringDate,
+                Age = employee.Age,
+                Gander = employee.Gander.ToString(), 
+                EmployeeType = employee.EmployeeType.ToString(), 
+                PhoneNumber = employee.PhoneNumber,
+                IsActive = employee.IsActive,
+                Salary = employee.Salary
+            };
 
-        //[HttpPost]
-        //public IActionResult Edit(int id, EmployeeEditViewModel employeeVM)
-        //{
-        //    if (!ModelState.IsValid)
-        //        return View(employeeVM);
-        //    var message = string.Empty;
+            return View(model);
+        }
 
-        //    try
-        //    {
-        //        var result = _employeeService.UpdateEmployee(new EmployeeToUpdateDto()
-        //        {
-        //            Code = employeeVM.Code,
-        //            Name = employeeVM.Name,
-        //            Description = employeeVM.Description,
-        //            CreationDate = employeeVM.CreationDate,
-        //        });
 
-        //        if (result > 0)
-        //            return RedirectToAction(nameof(Index));
-        //        else
-        //        {
-        //            message = "Employee Cannot Be Updated";
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        message = _env.IsDevelopment() ? ex.Message : "Employee Cannot Be Updated";
-        //    }
-        //    return View(employeeVM);
-        //}
+        [HttpPost]
+        public IActionResult Edit(int id, EmployeeEditViewModel employeeVM)
+        {
+            if (!ModelState.IsValid)
+                return View(employeeVM);
+            var message = string.Empty;
+
+            try
+            {
+                var result = _employeeService.UpdateEmployee(new EmployeeToUpdateDto() // maping from  EmployeeToUpdateDto to EmployeeViewModel
+                {
+                    Id = employeeVM.Id,
+                    Name = employeeVM.Name,
+                    Address = employeeVM.Address,
+                    Email = employeeVM.Email,
+                    Age = employeeVM.Age,
+                    HiringDate = employeeVM.HiringDate,
+                    Gander = employeeVM.Gander.ToString(),
+                    EmployeeType = employeeVM.EmployeeType.ToString(),
+                    PhoneNumber = employeeVM.PhoneNumber,
+                    IsActive = employeeVM.IsActive,
+                    Salary = employeeVM.Salary
+                });
+
+                if (result > 0)
+                    return RedirectToAction(nameof(Index));
+                else
+                {
+                    message = "Employee Cannot Be Updated";
+                }
+            }
+            catch (Exception ex)
+            {
+                message = _env.IsDevelopment() ? ex.Message : "Employee Cannot Be Updated";
+            }
+            return View(employeeVM);
+        }
 
         [HttpGet]
         public IActionResult Delete(int? id)
