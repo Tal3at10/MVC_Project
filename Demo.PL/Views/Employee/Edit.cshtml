@@ -1,0 +1,93 @@
+﻿@using Demo.DAL.Entities.Common.Enums
+@using Demo.PL.ViewModels.Employees
+@model EmployeeEditViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="justify-content-center align-content-center mt-3">
+    <h1 class="col-8 my-4">Edit Employee</h1>
+
+    <form method="post" asp-controller="Employee" asp-action="Edit" class="col-8">
+        @* If you have an Id in your model, include it as a hidden field *@
+        <input type="hidden" asp-for="Id" />
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-group mb-3">
+            <label class="form-label" for="Name">Name</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label class="form-label" for="PhoneNumber">Phone Number</label>
+            <input asp-for="PhoneNumber" class="form-control" />
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label class="form-label" for="HiringDate">Hiring Date</label>
+            <input type="date" asp-for="HiringDate" class="form-control" />
+            <span asp-validation-for="HiringDate" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label class="form-label" for="Age">Age</label>
+            <input asp-for="Age" class="form-control" />
+            <span asp-validation-for="Age" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label class="form-label" for="Email">Email</label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label class="form-label" for="Address">Address</label>
+            <input asp-for="Address" class="form-control" />
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label class="form-label" for="Salary">Salary</label>
+            <input asp-for="Salary" class="form-control" />
+            <span asp-validation-for="Salary" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="Gander" class="form-label">Gender</label>
+            <div>
+                @foreach (Gander ganderOption in Enum.GetValues(typeof(Gander)))
+                {
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" asp-for="Gander" value="@ganderOption" />
+                        <label class="form-check-label">@ganderOption</label>
+                    </div>
+                }
+                <span asp-validation-for="Gander" class="text-danger d-block"></span>
+            </div>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="EmployeeType" class="form-label">Employee Type</label>
+            <select asp-for="EmployeeType" asp-items="Html.GetEnumSelectList<EmployeeType>()" class="form-control">
+                <option value="">Select Employee Type</option>
+            </select>
+            <span asp-validation-for="EmployeeType" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3 form-check">
+            <input asp-for="IsActive" class="form-check-input" />
+            <label class="form-check-label" asp-for="IsActive">Is Active</label>
+            <span asp-validation-for="IsActive" class="text-danger d-block"></span>
+        </div>
+
+        <div class="mt-4 m-auto">
+            <input class="btn btn-primary" type="submit" value="Edit" />
+            <a asp-controller="Employee" asp-action="Index" class="btn btn-outline-dark">Back To List</a>
+        </div>
+    </form>
+</div>

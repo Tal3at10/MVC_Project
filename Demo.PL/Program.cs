@@ -1,5 +1,8 @@
 using Demo.BLL.Services;
+using Demo.BLL.Services.Departments;
+using Demo.BLL.Services.Employees;
 using Demo.DAL.Presistance.Reposateries.Departments;
+using Demo.DAL.Presistance.Reposateries.Employees;
 using Demo.DAL.Presistence.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,8 +20,11 @@ namespace Demo.PL
             {
                 options.UseSqlServer(builder.Configuration.GetSection("ConnectionStrings")["DefaultConnection"]);
             });
-            builder.Services.AddScoped<IDepartmentRepository , DepartmentRepository>();
-            builder.Services.AddScoped<IDepartmentService, DepartmentService>();  
+            builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+            builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

@@ -3,9 +3,9 @@ using Demo.DAL.Entities.Departments;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Demo.DAL.Presistence.Data.Configurations
+namespace Demo.DAL.Presistance.Data.Configurations.Departments
 {
-    internal class DepartmentConfigurations : IEntityTypeConfiguration<Department>
+    public class DepartmentConfigurations : IEntityTypeConfiguration<Department>
     {
         public void Configure(EntityTypeBuilder<Department> builder)
         {

@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Presistance\Data\DataSeed\" />
     <Folder Include="Presistance\Data\Migrations\" />
+    <Folder Include="Presistance\Data\DataSeed\" />
   </ItemGroup>
 
   <ItemGroup>
