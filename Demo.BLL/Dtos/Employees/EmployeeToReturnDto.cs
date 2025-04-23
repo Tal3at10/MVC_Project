@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +14,11 @@ namespace Demo.BLL.Dtos.Employees
         public int Id { get; set; }
         public string Name { get; set; } = null!;
         public int? Age { get; set; }
+
+        [DataType(DataType.Currency)]
         public decimal Salary { get; set; }
+
+        [DisplayName("IS active")]
         public bool IsActive { get; set; }
         public string? Email { get; set; }
         public string Gander { get; set; }
