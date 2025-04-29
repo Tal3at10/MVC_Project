@@ -41,15 +41,21 @@ namespace Demo.PL.Controllers.Departments
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(DepartmentToCreateDto departmentToCreateDto)
+        public IActionResult Create(DepartmentViewModel departmentVM)
         {
             if (!ModelState.IsValid)
-                return View(departmentToCreateDto);
+                return View(departmentVM);
             var message = string.Empty;
 
             try
             {
-                var result = _departmentService.CreateDepartment(departmentToCreateDto);
+                var result = _departmentService.CreateDepartment(new DepartmentToCreateDto()
+                {
+                    Code = departmentVM.Code,
+                    Name = departmentVM.Name,
+                    Description = departmentVM.Description,
+                    CreationDate = departmentVM.CreationDate,
+                });
 
                 if (result > 0)
                 {
@@ -59,7 +65,7 @@ namespace Demo.PL.Controllers.Departments
                 {
                     message = "Department Cannot be Created";
                     ModelState.AddModelError(string.Empty, message);
-                    return View(departmentToCreateDto);
+                    return View(departmentVM);
                 }
             }
             catch (Exception ex)
@@ -69,7 +75,7 @@ namespace Demo.PL.Controllers.Departments
                 if (_env.IsDevelopment())
                 {
                     message = ex.Message;
-                    return View(departmentToCreateDto);
+                    return View(departmentVM);
                 }
                 else
                 {
@@ -109,7 +115,7 @@ namespace Demo.PL.Controllers.Departments
             if (department == null)
                 return NotFound(); // error 404
 
-            return View(new DepartmentEditViewModel
+            return View(new DepartmentViewModel
             {
                 Code = department.Code,
                 Name = department.Name,
@@ -120,7 +126,7 @@ namespace Demo.PL.Controllers.Departments
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, DepartmentEditViewModel departmentVM)
+        public IActionResult Edit(int id, DepartmentViewModel departmentVM)
         {
             if (!ModelState.IsValid)
                 return View(departmentVM);
