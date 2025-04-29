@@ -9,6 +9,7 @@ namespace Demo.PL.Controllers.Departments
 {
     public class DepartmentController : Controller
     {
+        #region Services
         private readonly IDepartmentService _departmentService;
         private readonly ILogger<DepartmentController> _logger;
         private readonly IWebHostEnvironment _env;
@@ -19,7 +20,9 @@ namespace Demo.PL.Controllers.Departments
             _logger = logger;
             _env = env;
         }
+        #endregion
 
+        #region Index
         [HttpGet]
         public IActionResult Index()
         {
@@ -27,6 +30,9 @@ namespace Demo.PL.Controllers.Departments
             return View(departments);
         }
 
+        #endregion
+
+        #region Create
         [HttpGet]
         public IActionResult Create()
         {
@@ -34,6 +40,7 @@ namespace Demo.PL.Controllers.Departments
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(DepartmentToCreateDto departmentToCreateDto)
         {
             if (!ModelState.IsValid)
@@ -73,6 +80,9 @@ namespace Demo.PL.Controllers.Departments
 
         }
 
+        #endregion
+
+        #region Details
         [HttpGet]
         public IActionResult Details(int? id)
         {
@@ -86,6 +96,9 @@ namespace Demo.PL.Controllers.Departments
             return View(department);
         }
 
+        #endregion
+
+        #region Edit
         [HttpGet]
         public IActionResult Edit(int? id)
         {
@@ -106,6 +119,7 @@ namespace Demo.PL.Controllers.Departments
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, DepartmentEditViewModel departmentVM)
         {
             if (!ModelState.IsValid)
@@ -136,6 +150,9 @@ namespace Demo.PL.Controllers.Departments
             return View(departmentVM);
         }
 
+        #endregion
+
+        #region Delete
         [HttpGet]
         public IActionResult Delete(int? id)
         {
@@ -149,6 +166,7 @@ namespace Demo.PL.Controllers.Departments
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Delete(int id)
         {
             var result = _departmentService.DeleteDepartment(id);
@@ -172,6 +190,8 @@ namespace Demo.PL.Controllers.Departments
             ModelState.AddModelError(string.Empty, message);
             return View(nameof(Index));
         }
+
+        #endregion
 
     }
 

@@ -12,6 +12,7 @@ namespace Demo.PL.Controllers.Employees
 {
     public class EmployeeController : Controller
     {
+        #region Services
         private readonly IEmployeeService _employeeService;
         private readonly ILogger<EmployeeController> _logger;
         private readonly IWebHostEnvironment _env;
@@ -23,13 +24,18 @@ namespace Demo.PL.Controllers.Employees
             _env = env;
         }
 
+        #endregion
+
+        #region Index
         [HttpGet]
         public IActionResult Index()
         {
             var employees = _employeeService.GetAllEmployees();
             return View(employees);
         }
+        #endregion
 
+        #region Create
         [HttpGet]
         public IActionResult Create()
         {
@@ -37,6 +43,7 @@ namespace Demo.PL.Controllers.Employees
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(EmployeeToCreateDto employeeToCreateDto)
         {
             if (!ModelState.IsValid)
@@ -75,7 +82,9 @@ namespace Demo.PL.Controllers.Employees
             }
 
         }
+        #endregion
 
+        #region Details
         [HttpGet]
         public IActionResult Details(int? id)
         {
@@ -88,7 +97,9 @@ namespace Demo.PL.Controllers.Employees
 
             return View(employee);
         }
+        #endregion
 
+        #region Edit
         [HttpGet]
         public IActionResult Edit(int? id)
         {
@@ -99,7 +110,7 @@ namespace Demo.PL.Controllers.Employees
             if (employee == null)
                 return NotFound(); // 404 Not Found
 
-           
+
             var model = new EmployeeEditViewModel
             {
                 Id = employee.Id,
@@ -108,8 +119,8 @@ namespace Demo.PL.Controllers.Employees
                 Email = employee.Email,
                 HiringDate = employee.HiringDate,
                 Age = employee.Age,
-                Gander = employee.Gander.ToString(), 
-                EmployeeType = employee.EmployeeType.ToString(), 
+                Gander = employee.Gander.ToString(),
+                EmployeeType = employee.EmployeeType.ToString(),
                 PhoneNumber = employee.PhoneNumber,
                 IsActive = employee.IsActive,
                 Salary = employee.Salary
@@ -120,6 +131,7 @@ namespace Demo.PL.Controllers.Employees
 
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, EmployeeEditViewModel employeeVM)
         {
             if (!ModelState.IsValid)
@@ -156,7 +168,9 @@ namespace Demo.PL.Controllers.Employees
             }
             return View(employeeVM);
         }
+        #endregion
 
+        #region Delete
         [HttpGet]
         public IActionResult Delete(int? id)
         {
@@ -170,6 +184,7 @@ namespace Demo.PL.Controllers.Employees
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Delete(int id)
         {
             var result = _employeeService.DeleteEmployee(id);
@@ -193,5 +208,7 @@ namespace Demo.PL.Controllers.Employees
             ModelState.AddModelError(string.Empty, message);
             return View(nameof(Index));
         }
+        #endregion
     }
+
 }
