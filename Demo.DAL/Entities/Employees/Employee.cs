@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Demo.DAL.Entities.Common.Enums;
+using Demo.DAL.Entities.Departments;
 
 namespace Demo.DAL.Entities.Employees
 {
@@ -19,6 +20,10 @@ namespace Demo.DAL.Entities.Employees
         public DateOnly HiringDate { get; set; }
         public Gander Gander { get; set; }
         public EmployeeType EmployeeType { get; set; }
+
+        // Navigational Property [One]
+        public Department? Department { get; set; }
+        public int? DepartmentId { get; set; }
 
     }
 }

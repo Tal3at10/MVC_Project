@@ -37,5 +37,7 @@ namespace Demo.BLL.Dtos.Employees
         public DateTime CreatedOn { get; set; } = DateTime.UtcNow;  // Set default value for CreatedOn
         public DateTime? LastModifiedOn { get; set; }
         public int? LastModifiedBy { get; set; }
+        [Display(Name = "Department")]
+        public int? DepartmentId { get; set; }
     }
 }

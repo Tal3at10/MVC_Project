@@ -21,7 +21,9 @@ namespace Demo.BLL.Services
 
         public IEnumerable<DepartmentToReturnDto> GetAllDepartments()
         {
-            var departments = _departmentRepository.GetAllQuarable().Where(d => d.IsDeleted == false)
+            var departments = _departmentRepository.GetAllQuarable()
+                .Where(d => d.IsDeleted == false)
+                .AsNoTracking()
                 .Select(d => new DepartmentToReturnDto
                 {
                     Description = d.Description,
@@ -29,10 +31,12 @@ namespace Demo.BLL.Services
                     Code = d.Code,
                     Id = d.Id,
                     Name = d.Name,
-                }).AsNoTracking().ToList();
+                })
+                .ToList();
 
             return departments;
         }
+
 
         public DepartmentDetailsToReaturnDto? GetDepartmentById(int id)
         {

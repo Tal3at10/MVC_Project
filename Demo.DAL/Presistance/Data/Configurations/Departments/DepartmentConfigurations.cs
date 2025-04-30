@@ -16,6 +16,10 @@ namespace Demo.DAL.Presistance.Data.Configurations.Departments
             builder.Property(d => d.LastModifiedOn).HasComputedColumnSql("GETDATE()");
             builder.Property(d => d.CreatedOn).HasDefaultValueSql("GETDATE()");
 
+            builder.HasMany(D => D.Employees) // Department has many Employees
+        .WithOne(E => E.Department) // Each Employee has one Department (navigation property)
+        .OnDelete(DeleteBehavior.SetNull);
+
 
 
         }

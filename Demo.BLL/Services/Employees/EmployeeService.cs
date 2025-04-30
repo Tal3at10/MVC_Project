@@ -32,7 +32,8 @@ namespace Demo.BLL.Services.Employees
                 EmployeeType = Enum.Parse<EmployeeType>(EmployeeDto.EmployeeType.ToString()),
                 Email = EmployeeDto.Email,
                 LastModifiedBy = 1,
-                LastModifiedOn = DateTime.UtcNow
+                LastModifiedOn = DateTime.UtcNow,
+                DepartmentId = EmployeeDto.DepartmentId,
             };
             return _employeeRepository.AddT(employee); // Nuber of affected rows
 
@@ -60,6 +61,7 @@ namespace Demo.BLL.Services.Employees
                 Salary = employee.Salary,
                 EmployeeType = employee.EmployeeType.ToString(),
                 Gander = employee.Gander.ToString(),
+
             });
 
 
@@ -113,7 +115,9 @@ namespace Demo.BLL.Services.Employees
                 LastModifiedBy = EmployeeDto.LastModifiedBy,
                 LastModifiedOn = EmployeeDto.LastModifiedOn,
                 CreatedBy = EmployeeDto.CreatedBy,
-                CreatedOn = EmployeeDto.CreatedOn
+                CreatedOn = EmployeeDto.CreatedOn,
+                DepartmentId = EmployeeDto.DepartmentId,
+
             };
 
             return _employeeRepository.UpadteT(employee);

@@ -36,6 +36,8 @@ namespace Demo.PL.Controllers.Departments
         [HttpGet]
         public IActionResult Create()
         {
+            // SEnd Departments from action to view
+            ViewData["Departments"] = _departmentService.GetAllDepartments();
             return View();
         }
 
