@@ -59,14 +59,16 @@ namespace Demo.PL.Controllers.Departments
 
                 if (result > 0)
                 {
-                    return RedirectToAction(nameof(Index));
+                    TempData["Message"] = "New Department Created Successfully";
                 }
                 else
                 {
                     message = "Department Cannot be Created";
+                    TempData["Message"] = message;
                     ModelState.AddModelError(string.Empty, message);
                     return View(departmentVM);
                 }
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
