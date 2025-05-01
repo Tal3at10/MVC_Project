@@ -18,7 +18,8 @@ namespace Demo.PL
             builder.Services.AddControllersWithViews();
             builder.Services.AddDbContext<ApplicationDbContext>((options)=>
             {
-                options.UseSqlServer(builder.Configuration.GetSection("ConnectionStrings")["DefaultConnection"]);
+                options.UseLazyLoadingProxies()
+                .UseSqlServer(builder.Configuration.GetSection("ConnectionStrings")["DefaultConnection"]);
             });
             builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
             builder.Services.AddScoped<IDepartmentService, DepartmentService>();

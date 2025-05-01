@@ -8,6 +8,7 @@ using Demo.DAL.Entities.Common.Enums;
 using Demo.DAL.Entities.Employees;
 using Demo.DAL.Presistance.Reposateries.Employees;
 using Demo.DAL.Presistence.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Demo.BLL.Services.Employees
 {
@@ -51,20 +52,24 @@ namespace Demo.BLL.Services.Employees
 
         public IEnumerable<EmployeeToReturnDto> GetAllEmployees()
         {
-            return _employeeRepository.GetAllQuarable().Where(e=>e.IsDeleted == false).Select(employee => new EmployeeToReturnDto()
-            {
-                Id = employee.Id,
-                Name = employee.Name,
-                Age = employee.Age,
-                Email = employee.Email,
-                IsActive = employee.IsActive,
-                Salary = employee.Salary,
-                EmployeeType = employee.EmployeeType.ToString(),
-                Gander = employee.Gander.ToString(),
+            var employees = _employeeRepository.GetAllQuarable()
+                .Include(e => e.Department)
+                .Where(e => !e.IsDeleted)
+                .Select(employee => new EmployeeToReturnDto
+                {
+                    Id = employee.Id,
+                    Name = employee.Name,
+                    Age = employee.Age,
+                    Email = employee.Email,
+                    IsActive = employee.IsActive,
+                    Salary = employee.Salary,
+                    EmployeeType = employee.EmployeeType.ToString(),
+                    Gander = employee.Gander.ToString(),
+                    Department = employee.Department != null ? employee.Department.Name : null // use Eager Loading
+                })
+                .ToList();
 
-            });
-
-
+            return employees;
         }
 
         public EmployeeDetailsToReaturnDto? GetEmployeeById(int id)
@@ -89,7 +94,8 @@ namespace Demo.BLL.Services.Employees
                     LastModifiedBy = employee.LastModifiedBy,
                     LastModifiedOn = employee.LastModifiedOn,
                     CreatedBy = employee.CreatedBy,
-                    CreatedOn = employee.CreatedOn
+                    CreatedOn = employee.CreatedOn,
+                    Department = employee.Department.Name, // Lazy Loading
                 };
             }
 

@@ -21,8 +21,8 @@ namespace Demo.DAL.Entities.Employees
         public Gander Gander { get; set; }
         public EmployeeType EmployeeType { get; set; }
 
-        // Navigational Property [One]
-        public Department? Department { get; set; }
+        // Navigational Property[Not Be Loaded By Deafult] [One]
+        public virtual Department? Department { get; set; }
         public int? DepartmentId { get; set; }
 
     }

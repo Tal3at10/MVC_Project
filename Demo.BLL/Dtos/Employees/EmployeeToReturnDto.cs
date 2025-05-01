@@ -23,5 +23,7 @@ namespace Demo.BLL.Dtos.Employees
         public string? Email { get; set; }
         public string Gander { get; set; }
         public string EmployeeType { get; set; }
+        public string? Department { get; set; }
+
     }
 }

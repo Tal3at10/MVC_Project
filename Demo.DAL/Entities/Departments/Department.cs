@@ -15,6 +15,6 @@ namespace Demo.DAL.Entities.Departments
         public DateTime CreationDate { get; set; }
 
         // Navigational Property [Many]
-       public IEnumerable<Employee> Employees { get; set;} = new HashSet<Employee>();
+       public virtual IEnumerable<Employee> Employees { get; set;} = new HashSet<Employee>();
     }
 }
