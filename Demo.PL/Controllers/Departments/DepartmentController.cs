@@ -119,6 +119,7 @@ namespace Demo.PL.Controllers.Departments
             if (department == null)
                 return NotFound(); // error 404
 
+            ViewData["Departments"] = _departmentService.GetAllDepartments();
             return View(new DepartmentViewModel
             {
                 Code = department.Code,
@@ -147,11 +148,14 @@ namespace Demo.PL.Controllers.Departments
                 });
 
                 if (result > 0)
-                    return RedirectToAction(nameof(Index));
+                {
+                    TempData["Message"] = "New Department Created Successfully";
+                }
                 else
                 {
                     message = "Department Cannot Be Updated";
                 }
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
@@ -186,8 +190,11 @@ namespace Demo.PL.Controllers.Departments
             try
             {
                 if (result)
+                {
+                    TempData["Message"] = "New Department Created Successfully";
                     return RedirectToAction(nameof(Index));
 
+                }
                 message = "An Error Happened while Deleting";
 
 

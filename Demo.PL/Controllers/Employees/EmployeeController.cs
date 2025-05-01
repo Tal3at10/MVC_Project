@@ -39,31 +39,50 @@ namespace Demo.PL.Controllers.Employees
         [HttpGet]
         public IActionResult Create()
         {
+            // SEnd Departments from action to view
+            ViewData["Employees"] = _employeeService.GetAllEmployees();
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(EmployeeToCreateDto employeeToCreateDto)
+        public IActionResult Create(EmployeeViewModel employeeViewModel)
         {
             if (!ModelState.IsValid)
-                return View(employeeToCreateDto);
+                return View(employeeViewModel);
             var message = string.Empty;
 
             try
             {
-                var result = _employeeService.CreateEmployee(employeeToCreateDto);
+                var result = _employeeService.CreateEmployee(new EmployeeToCreateDto()
+                {
+                    Name = employeeViewModel.Name,
+                    PhoneNumber = employeeViewModel.PhoneNumber,
+                    Address = employeeViewModel.Address,
+                    Age = employeeViewModel.Age,
+                    Email = employeeViewModel.Email,
+                    Salary = employeeViewModel.Salary,
+                    IsActive = employeeViewModel.IsActive,
+                    HiringDate = employeeViewModel.HiringDate,
+                    EmployeeType = employeeViewModel.EmployeeType,
+                    Gander = employeeViewModel.Gander,
+                    DepartmentId = employeeViewModel.DepartmentId,
+
+
+                });
 
                 if (result > 0)
                 {
-                    return RedirectToAction(nameof(Index));
+                    TempData["Message"] = "New Employee Created Successfully";
                 }
                 else
                 {
                     message = "Employee Cannot be Created";
+                    TempData["Message"] = message;
                     ModelState.AddModelError(string.Empty, message);
-                    return View(employeeToCreateDto);
+                    return View(employeeViewModel);
                 }
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
@@ -72,7 +91,7 @@ namespace Demo.PL.Controllers.Employees
                 if (_env.IsDevelopment())
                 {
                     message = ex.Message;
-                    return View(employeeToCreateDto);
+                    return View(employeeViewModel);
                 }
                 else
                 {
@@ -111,7 +130,7 @@ namespace Demo.PL.Controllers.Employees
                 return NotFound(); // 404 Not Found
 
 
-            var model = new EmployeeEditViewModel
+            var model = new EmployeeViewModel
             {
                 Id = employee.Id,
                 Name = employee.Name,
@@ -132,7 +151,7 @@ namespace Demo.PL.Controllers.Employees
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, EmployeeEditViewModel employeeVM)
+        public IActionResult Edit(int id, EmployeeViewModel employeeVM)
         {
             if (!ModelState.IsValid)
                 return View(employeeVM);
@@ -156,11 +175,14 @@ namespace Demo.PL.Controllers.Employees
                 });
 
                 if (result > 0)
-                    return RedirectToAction(nameof(Index));
+                {
+                    TempData["Message"] = "Employee Updated Successfully";
+                }
                 else
                 {
                     message = "Employee Cannot Be Updated";
                 }
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
@@ -194,7 +216,11 @@ namespace Demo.PL.Controllers.Employees
             try
             {
                 if (result)
+                {
+                    TempData["Message"] = "Employee Deleted Successfully";
                     return RedirectToAction(nameof(Index));
+
+                }
 
                 message = "An Error Happened while Deleting";
 

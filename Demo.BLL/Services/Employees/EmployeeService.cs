@@ -95,7 +95,7 @@ namespace Demo.BLL.Services.Employees
                     LastModifiedOn = employee.LastModifiedOn,
                     CreatedBy = employee.CreatedBy,
                     CreatedOn = employee.CreatedOn,
-                    Department = employee.Department.Name, // Lazy Loading
+                    Department = employee.Department?.Name, // Lazy Loading
                 };
             }
 

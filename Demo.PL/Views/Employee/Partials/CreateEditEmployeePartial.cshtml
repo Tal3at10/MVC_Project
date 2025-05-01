@@ -1,0 +1,92 @@
+﻿@using Demo.BLL.Dtos.Employees
+@using Demo.DAL.Entities.Common.Enums
+@model Demo.PL.ViewModels.Employees.EmployeeViewModel
+
+@{
+    // var departments = new SelectList(ViewData["Departments"] as IEnumerable<DepartmentToReturnDto>, nameof(DepartmentToReturnDto.Id), nameof(DepartmentToReturnDto.Name));
+}
+    <form method="post" asp-controller="Employee" asp-action="@ViewBag.Action" class="col-8">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="form-group mb-3">
+        <label asp-for="Name" class="form-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="Email" class="form-label"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="Address" class="form-label"></label>
+        <input asp-for="Address" class="form-control" />
+        <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="PhoneNumber" class="form-label"></label>
+        <input asp-for="PhoneNumber" class="form-control" />
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="Age" class="form-label"></label>
+        <input asp-for="Age" class="form-control" />
+        <span asp-validation-for="Age" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="Salary" class="form-label"></label>
+        <input asp-for="Salary" class="form-control" />
+        <span asp-validation-for="Salary" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="HiringDate" class="form-label"></label>
+        <input asp-for="HiringDate" type="date" class="form-control" />
+        <span asp-validation-for="HiringDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="Gander" class="form-label"></label>
+        <div>
+            @foreach (Gander g in Enum.GetValues(typeof(Gander)))
+            {
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" asp-for="Gander" value="@g" />
+                    <label class="form-check-label">@g</label>
+                </div>
+            }
+        </div>
+        <span asp-validation-for="Gander" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="EmployeeType" class="form-label"></label>
+        <select asp-for="EmployeeType" asp-items="Html.GetEnumSelectList<EmployeeType>()" class="form-control">
+            <option value="">Select Employee Type</option>
+        </select>
+        <span asp-validation-for="EmployeeType" class="text-danger"></span>
+    </div>
+
+    @* <div class="form-group mb-3"> *@
+    @*     <label class="form-label" asp-for="DepartmentId"></label> *@
+    @*     <select asp-for="DepartmentId" asp-items="@departments" class="form-control"> *@
+    @*         <option value="@null">Select Department</option> *@
+    @*     </select> *@
+    @* </div> *@
+
+    <div class="form-group mb-3 form-check">
+        <input asp-for="IsActive" class="form-check-input" />
+        <label class="form-check-label" asp-for="IsActive"></label>
+    </div>
+
+    <div class="mt-4">
+        <input type="submit" value="@ViewBag.Action" class="btn btn-primary" />
+        <a asp-controller="Employee" asp-action="Index" class="btn btn-outline-dark">Back to List</a>
+    </div>
+</form>
+

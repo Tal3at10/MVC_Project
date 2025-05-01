@@ -4,7 +4,7 @@ using Demo.DAL.Entities.Common.Enums;
 
 namespace Demo.PL.ViewModels.Employees
 {
-    public class EmployeeEditViewModel
+    public class EmployeeViewModel
     {
         public int Id { get; set; }
 
@@ -23,5 +23,9 @@ namespace Demo.PL.ViewModels.Employees
         public string? Email { get; set; }
         public string Gander { get; set; }
         public string EmployeeType { get; set; }
+
+        public int? DepartmentId { get; set; }
+
+
     }
 }
