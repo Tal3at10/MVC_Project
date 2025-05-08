@@ -186,5 +186,41 @@ namespace NoteKeeperPro.Web.Controllers
         }
         #endregion
 
+        #region ResePassword
+        [HttpGet]
+        public IActionResult ResePassword(string email, string token)
+        {
+            TempData["email"] = email;
+            TempData["token"] = token;
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ResePassword(ResetPasswordViewModel resetPasswordViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var email = TempData["email"] as string;
+                var token = TempData["token"] as string;
+
+                var user = await _userManager.FindByEmailAsync(email);
+
+                if (user is not null)
+                {
+                    var result = await _userManager.ResetPasswordAsync(user, token, resetPasswordViewModel.Password);
+
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction(nameof(Login));
+                    }
+                }
+
+            }
+            ModelState.AddModelError(string.Empty, "Invalid Operation plz Try Again");
+            return View(resetPasswordViewModel);
+        }
+        #endregion
+
     }
 }
